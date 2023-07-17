@@ -1,6 +1,4 @@
 import { ethers } from 'ethers'
-
-// Components
 import Rating from './Rating'
 
 const Section = ({ title, items, togglePop }) => {
@@ -27,5 +25,4 @@ const Section = ({ title, items, togglePop }) => {
         </div>
     );
 }
-
 export default Section;

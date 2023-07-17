@@ -9,24 +9,16 @@ const Navigation = ({ account, setAccount }) => {
 
     return (
         <nav>
-            <div className='nav__brand'>
-            
-                <h1> Acclimate</h1>
-                
+            <div className='nav__brand'>      
+                <h1> Acclimate</h1>               
             </div>
-
             <div >
-            
-            <ul className='nav__links'>
-                <li><a href="#Essentials">Essentials</a></li>
-                
-                <li><a href="#Clothing & Costumes">Clothing</a></li>
-                <li><a href="#Toys">Toys</a></li>
-            </ul>
-                
+                <ul className='nav__links'>
+                    <li><a href="#Essentials">Essentials</a></li> 
+                    <li><a href="#Clothing & Costumes">Clothing</a></li>
+                    <li><a href="#Toys">Toys</a></li>
+                </ul>
             </div>
-         
-
             <input
                 type="text"
                 className="nav__search"

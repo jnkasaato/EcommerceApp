@@ -24,7 +24,7 @@
       "category": "clothing",
       "image": "https://ipfs.io/ipfs/bafybeicksb35fsqkomx6knfdezxzl6juw5647cniohzygxe75aodyzp2ju/fooddog.jpg",
       "price": "0.25",
-      "rating": 2,
+      "rating": 5,
       "stock": 24
     },
     {
@@ -40,9 +40,9 @@
       "id": 5,
       "name": "Bed",
       "category": "clothing",
-      "image": "https://ipfs.io/ipfs/bafybeidrz7levz4skruf5cacvieqzxydt2npwowqpsbbmxg477rtddiqli/dogbed.jpg",
-      "price": "4.5",
-      "rating": 3,
+      "image": "https://ipfs.io/ipfs/QmWYLAdPeEQXXV1TfxQSU6axSJKdz58jJpYduaaPL1i457",
+      "price": "2.5",
+      "rating": 4,
       "stock": 12
     },
     {

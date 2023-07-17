@@ -27,7 +27,7 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
   const buyHandler = async () => {
     const signer = await provider.getSigner()
 
-    // Buy item...
+    // Buy item
     let transaction = await dappazon.connect(signer).buy(item.id, { value: item.cost })
     await transaction.wait()
 
@@ -69,7 +69,7 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
 
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima rem, iusto,
             consectetur inventore quod soluta quos qui assumenda aperiam, eveniet doloribus
-            commodi error modi eaque! Iure repudiandae temporibus ex? Optio!
+            commodi error modi eaque! Iure repudiandae temporibus ex? Optio! Iure repudiandae temporibus ex? Optio!
           </p>
         </div>
 
