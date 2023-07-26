@@ -11,11 +11,11 @@
   --clr-black: #000000;
   --clr-grey: #707070;
   --clr-bunker: #131921;
-  --clr-orange: #FF9900;
-  --clr-orange-dark: #cc8111;
-  --clr-dark: #812f31;
-  --clr-med:#bc5e5e;
-  --clr-light:#ffc5c4;
+  --clr-maroon: #BF6565;
+  --clr-maroon-light: #DFA7AA;
+  --clr-dark: #812F31;
+  --clr-med: #BC5E5E;
+  --clr-light: #FFC5C4;
 }
 
 body {
@@ -107,7 +107,7 @@ nav {
   padding: 10px;
   border-radius: 6px;
   min-width: 40%;
-  outline: .3px solid var(--clr-light);
+  outline: .1px solid var(--clr-light);
   ;
 }
 
@@ -340,7 +340,7 @@ nav {
   height: 40px;
   margin: 20px 0;
 
-  background-color: var(--clr-orange);
+  background-color: var(--clr-maroon);
   color: var(--clr-black);
 
   border: none;
@@ -349,13 +349,14 @@ nav {
   font-family: "Open Sans";
   font-size: 0.95em;
   font-weight: 600;
+  color: #FFFFFF ;
 
   cursor: pointer;
   transition: all 250ms ease;
 }
 
 .product__buy:hover {
-  background-color: var(--clr-orange-dark);
+  background-color: var(--clr-maroon-light);
 }
 
 .product__bought {

@@ -51,7 +51,7 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
          
 
           <Rating value={item.rating} /> 
-          <small>Based on 43 ratings</small>
+          <small>Based on 99+ ratings</small>
           <p>{item.address}</p>
 
           <hr />
@@ -66,10 +66,13 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
 
           <p>
             {item.description}
-
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima rem, iusto,
-            consectetur inventore quod soluta quos qui assumenda aperiam, eveniet doloribus
-            commodi error modi eaque! Iure repudiandae temporibus ex? Optio! Iure repudiandae temporibus ex? Optio!
+            Introducing a new must-have for your furry companion! 
+            Our carefully crafted product is a game-changer that will ignite 
+            pure excitement in your pet's eyes. Made from top-quality materials
+            and a dash of  love, it is an
+            irresistible addition to your pet's world.Embrace the magic of bonding 
+            with your pet and elevate their
+            happiness with this extraordinary addition to your pet-loving home!
           </p>
         </div>
 

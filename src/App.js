@@ -66,7 +66,7 @@ function App() {
       <Navigation account={account} setAccount={setAccount} />
       
       <div className = "header">
-          <img src={header} class="center" />
+          <img src={header} className="center" />
       </div>
       
       {electronics && clothing && toys && (
