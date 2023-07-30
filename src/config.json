@@ -1,7 +1,22 @@
 {
-    "80001": {
-        "dappazon": {
-            "address": "0x2FECE71e0577940147C0ce75b5Ab9071912BC219"
-        }
+  "80001": {
+    "dappazon": {
+      "address": "0x2211b7aFBCD6860Ab6201CF361D48183Cb9b9AAb"
     }
+  },
+  "31337": {
+    "dappazon": {
+      "address": "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+    }
+  },
+  "5": {
+    "dappazon": {
+      "address": "0x3C8B15EC9F0902Af82841c026BBA99a62861C009"
+    }
+  },
+  "11155111": {
+    "dappazon": {
+      "address": "0x28d935E1d050f1300feb868a849bbE838d160eA4"
+    }
+  } 
 }

@@ -1,56 +1,78 @@
-import { useEffect, useState } from 'react'
-import { ethers } from 'ethers'
+import { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
 
-// Components
-import Rating from './Rating'
+import Rating from './Rating';
+import close from '../assets/close.svg';
 
-import close from '../assets/close.svg'
-import image from '../items.json'
+import Dappazon from '../abis/Dappazon.json';
 
+const Product = ({ item, provider, account, dappazon, togglePop, selectedNetwork }) => {
+  const [order, setOrder] = useState(null);
+  const [hasBought, setHasBought] = useState(false);
 
-const Product = ({ item, provider, account, dappazon, togglePop }) => {
-  const [order, setOrder] = useState(null)
-  const [hasBought, setHasBought] = useState(false)
-
-  const fetchDetails = async () => {
-    const events = await dappazon.queryFilter("Buy")
-    const orders = events.filter(
-      (event) => event.args.buyer === account && event.args.itemId.toString() === item.id.toString()
-    )
-
-    if (orders.length === 0) return
-
-    const order = await dappazon.orders(account, orders[0].args.orderId)
-    setOrder(order)
-  }
-
-  const buyHandler = async () => {
-    const signer = await provider.getSigner()
-
-    // Buy item
-    let transaction = await dappazon.connect(signer).buy(item.id, { value: item.cost })
-    await transaction.wait()
-
-    setHasBought(true)
-  }
+  // Set the correct contract based on the selected network
+  const getContract = (chainId) => {
+    switch (chainId) {
+      case 'localhost':
+        return new ethers.Contract('0x5fbdb2315678afecb367f032d93f642f64180aa3', Dappazon.abi, provider);
+      case 'goerli':
+        return new ethers.Contract('0x3C8B15EC9F0902Af82841c026BBA99a62861C009', Dappazon.abi, provider);
+      case 'mumbai':
+        return new ethers.Contract('0x2211b7aFBCD6860Ab6201CF361D48183Cb9b9AAb', Dappazon.abi, provider);
+      case 'sepolia':
+        return new ethers.Contract('0x28d935E1d050f1300feb868a849bbE838d160eA4', Dappazon.abi, provider);
+      default:
+        return dappazon; // Fallback to the mainnet contract
+    }
+  };
 
   useEffect(() => {
-    fetchDetails()
-  }, [hasBought])
+    // Fetch the order details for the current item if the user has bought it
+    const fetchDetails = async () => {
+      if (hasBought) {
+        const events = await dappazon.queryFilter('Buy');
+        const orders = events.filter(
+          (event) => event.args.buyer === account && event.args.itemId.toString() === item.id.toString()
+        );
+
+        if (orders.length === 0) return;
+
+        const order = await dappazon.orders(account, orders[0].args.orderId);
+        setOrder(order);
+      }
+    };
+
+    fetchDetails();
+  }, [hasBought, account, item.id, dappazon]);
+
+  const buyHandler = async () => {
+    const signer = await provider.getSigner();
+
+    // Buy item
+    try {
+      const transaction = await getContract(selectedNetwork).connect(signer).buy(item.id, { value: item.cost });
+      await transaction.wait();
+
+      setHasBought(true);
+    } catch (error) {
+      console.error('Error buying item:', error);
+    }
+  };
 
   return (
     <div className="product">
+
+
+    
       <div className="product__details">
         <div className="product__image">
           <img src={item.image} alt="Product" />
-
         </div>
         <div className="product__overview">
           <h1>{item.name}</h1>
           <h1>{item.price}</h1>
-         
 
-          <Rating value={item.rating} /> 
+          <Rating value={item.rating} />
           <small>Based on 99+ ratings</small>
           <p>{item.address}</p>
 
@@ -66,12 +88,9 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
 
           <p>
             {item.description}
-            Introducing a new must-have for your furry companion! 
-            Our carefully crafted product is a game-changer that will ignite 
-            pure excitement in your pet's eyes. Made from top-quality materials
-            and a dash of  love, it is an
-            irresistible addition to your pet's world.Embrace the magic of bonding 
-            with your pet and elevate their
+            Introducing a new must-have for your furry companion! Our carefully crafted product is a game-changer that
+            will ignite pure excitement in your pet's eyes. Made from top-quality materials and a dash of love, it is an
+            irresistible addition to your pet's world. Embrace the magic of bonding with your pet and elevate their
             happiness with this extraordinary addition to your pet-loving home!
           </p>
         </div>
@@ -92,39 +111,43 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
             <p>Out of Stock.</p>
           )}
 
-          <button className='product__buy' onClick={buyHandler}>
+          <button className="product__buy" onClick={buyHandler}>
             Buy Now
           </button>
 
-          <p><small>Ships from</small> Boston</p>
-          <p><small>Sold by</small> Acclimate</p>
-          <p><small>Return eligible through  {new Date(Date.now() + 1949600000).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
-            </small></p>
+          <p>
+            <small>Ships from</small> Boston
+          </p>
+          <p>
+            <small>Sold by</small> Acclimate
+          </p>
+          <p>
+            <small>
+              Return eligible through {new Date(Date.now() + 1949600000).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+            </small>
+          </p>
 
           {order && (
-            <div className='product__bought'>
+            <div className="product__bought">
               Item bought on <br />
               <strong>
-                {new Date(Number(order.time.toString() + '000')).toLocaleDateString(
-                  undefined,
-                  {
-                    weekday: 'long',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric'
-                  })}
+                {new Date(Number(order.time.toString() + '000')).toLocaleDateString(undefined, {
+                  weekday: 'long',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric',
+                })}
               </strong>
             </div>
           )}
         </div>
 
-
         <button onClick={togglePop} className="product__close">
           <img src={close} alt="Close" />
         </button>
       </div>
-    </div >
+    </div>
   );
-}
+};
 
 export default Product;
