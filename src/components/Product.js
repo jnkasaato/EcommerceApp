@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ethers } from 'ethers';
 
 import Rating from './Rating';
@@ -6,12 +6,17 @@ import close from '../assets/close.svg';
 
 import Dappazon from '../abis/Dappazon.json';
 
-const Product = ({ item, provider, account, dappazon, togglePop, selectedNetwork }) => {
+const Product = ({ item, provider, account, dappazon, togglePop, selectedNetworkProd }) => {
   const [order, setOrder] = useState(null);
   const [hasBought, setHasBought] = useState(false);
 
   // Set the correct contract based on the selected network
-  const getContract = (chainId) => {
+  const contract = useMemo(() => {
+    return getContract(selectedNetworkProd);
+  }, [selectedNetworkProd]);
+
+  // Set the correct contract based on the selected network
+  function getContract(chainId) {
     switch (chainId) {
       case 'localhost':
         return new ethers.Contract('0x5fbdb2315678afecb367f032d93f642f64180aa3', Dappazon.abi, provider);
@@ -24,7 +29,7 @@ const Product = ({ item, provider, account, dappazon, togglePop, selectedNetwork
       default:
         return dappazon; // Fallback to the mainnet contract
     }
-  };
+  }
 
   useEffect(() => {
     // Fetch the order details for the current item if the user has bought it
@@ -45,12 +50,21 @@ const Product = ({ item, provider, account, dappazon, togglePop, selectedNetwork
     fetchDetails();
   }, [hasBought, account, item.id, dappazon]);
 
+
+
+
+
+  useEffect(() => {
+    console.log('Product Component - selectedNetworkProd:', selectedNetworkProd);
+  }, [item, provider, account, dappazon, togglePop, selectedNetworkProd]);
+
+
   const buyHandler = async () => {
     const signer = await provider.getSigner();
 
     // Buy item
     try {
-      const transaction = await getContract(selectedNetwork).connect(signer).buy(item.id, { value: item.cost });
+      const transaction = await contract.connect(signer).buy(item.id, { value: item.cost });
       await transaction.wait();
 
       setHasBought(true);
@@ -59,11 +73,9 @@ const Product = ({ item, provider, account, dappazon, togglePop, selectedNetwork
     }
   };
 
+
   return (
     <div className="product">
-
-
-    
       <div className="product__details">
         <div className="product__image">
           <img src={item.image} alt="Product" />

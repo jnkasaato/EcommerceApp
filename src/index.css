@@ -42,9 +42,9 @@ h2:not(.product__overview h2) {
 nav {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 1fr 2fr 2fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr auto  ;
   align-items:center;
-  width: 1150px;
+  width: 1100px;
   margin-left: auto;
   margin-right: auto;
   
@@ -83,6 +83,7 @@ nav {
 
   list-style: none;
   scroll-behavior: smooth;
+  font-weight: 100;
 }
 
 .nav__links li {
@@ -132,6 +133,8 @@ nav {
 
   cursor: pointer;
   transition: all 250ms ease;
+  margin-right: 10px;
+
 }
 
 .nav__connect:hover {
@@ -141,8 +144,7 @@ nav {
 
 .nav__network-dropdown {
   position: absolute;
-  top: 80px; 
-  right: 145px;
+ 
   background-color: var(--clr-med);
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -153,7 +155,12 @@ nav {
   font-weight: 700;
   font-size: 1em;
   text-align: center;
-  font-family:"Open Sans";
+  font-family:"Lalezar";
+  
+  width: 150px;
+  height: 40px;
+  font-size: 1.25em;
+  font-weight: 200;
 }
 
 .nav__network-dropdown select {
