@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { ethers } from 'ethers';
+
 
 // Components
 import Navigation from './components/Navigation';
@@ -127,13 +128,13 @@ console.log('App Component global:', selectedNetworkProd);
 
 
 
-  const handleChainChanged = async (chainId) => {
-    console.log('Network changed:', chainId);
-    // You can handle the network change here, e.g., update your provider or reload data.
-    setSelectedNetwork(chainId);
-    // You might want to call loadBlockchainData again to update data from the new network.
-    loadBlockchainData();
-  };
+  const handleChainChanged = useCallback((chainId) => {
+  console.log('Network changed:', chainId);
+  // You can handle the network change here, e.g., update your provider or reload data.
+  setSelectedNetwork(chainId);
+  // You might want to call loadBlockchainData again to update data from the new network.
+  loadBlockchainData();
+}, [setSelectedNetwork]);
 
   useEffect(() => {
     // Set up the event listener for chainChanged
@@ -141,7 +142,7 @@ console.log('App Component global:', selectedNetworkProd);
       // Convert chainId to the format used by ethers.js (hex string with 0x prefix)
       const formattedChainId = `0x${parseInt(chainId).toString(16)}`;
       handleChainChanged(formattedChainId);
-    };
+  };
 
     // Listen for the "chainChanged" event from MetaMask
     if (window.ethereum) {
@@ -154,7 +155,7 @@ console.log('App Component global:', selectedNetworkProd);
         window.ethereum.removeListener('chainChanged', handleNetworkChange);
       }
     };
-  }, []);
+  }, [handleChainChanged]);
 
 
 
@@ -170,7 +171,7 @@ console.log('App Component global:', selectedNetworkProd);
       />
       <div>
         <div className="header">
-          <img src={header} className="center" />
+          <img src={header} alt="" className="center" />
         </div>
 
         {electronics && clothing && toys && (

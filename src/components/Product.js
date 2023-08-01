@@ -1,23 +1,13 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { ethers } from 'ethers';
-
 import Rating from './Rating';
 import close from '../assets/close.svg';
-
 import Dappazon from '../abis/Dappazon.json';
 
-const Product = ({ item, provider, account, dappazon, togglePop, selectedNetworkProd }) => {
-  const [order, setOrder] = useState(null);
-  const [hasBought, setHasBought] = useState(false);
-
-  // Set the correct contract based on the selected network
-  const contract = useMemo(() => {
-    return getContract(selectedNetworkProd);
-  }, [selectedNetworkProd]);
-
-  // Set the correct contract based on the selected network
-  function getContract(chainId) {
-    switch (chainId) {
+// Custom hook to memoize the contract instance
+function useContract(selectedNetworkProd, provider, dappazon) {
+  const getContract = useCallback(() => {
+    switch (selectedNetworkProd) {
       case 'localhost':
         return new ethers.Contract('0x5fbdb2315678afecb367f032d93f642f64180aa3', Dappazon.abi, provider);
       case 'goerli':
@@ -29,7 +19,18 @@ const Product = ({ item, provider, account, dappazon, togglePop, selectedNetwork
       default:
         return dappazon; // Fallback to the mainnet contract
     }
-  }
+  }, [selectedNetworkProd, provider, dappazon]);
+
+  return useMemo(getContract, [getContract]);
+}
+
+const Product = ({ item, provider, account, dappazon, togglePop, selectedNetworkProd }) => {
+  const [order, setOrder] = useState(null);
+  const [hasBought, setHasBought] = useState(false);
+
+  // Set the correct contract based on the selected network using the custom hook
+  const contract = useContract(selectedNetworkProd, provider, dappazon);
+
 
   useEffect(() => {
     // Fetch the order details for the current item if the user has bought it
