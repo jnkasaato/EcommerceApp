@@ -1,4 +1,12 @@
 # Dappazon
+Welcome to Acclimate! This is adecentralized marketplace built using Ethereum blockchain technology that allows users to explore, buy items using cryptocurrency.
+
+## Features
+- Browse products across different categories: Essentials, Clothing & Costumes, Toys.
+- Connect to your Ethereum wallet using MetaMask.
+- Buy products using cryptocurrency (ETH).
+- View product details, including price, description, and availability.
+- Track orders and purchases.
 
 ## Technology Stack & Tools
 
